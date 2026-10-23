@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acute Line — Digital Design Studio</title>
+<meta name="description" content="Acute Line Digital Design Studio. Expertise-driven computer graphics research and practice: digital humans, hard surface 3D, facial animation, virtual production.">
+<meta property="og:title" content="Acute Line — Digital Design Studio">
+<meta property="og:description" content="Expertise-driven computer graphics research and practice.">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --bg:#0a0a0b; --panel:#111113; --line:#26262a; --text:#ececec; --muted:#9a9aa2; --accent:#ffffff;
+    --nav-h:64px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  /* ---------- NAVBAR ---------- */
+  .nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:50;background:rgba(10,10,11,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:1320px;margin:0 auto;height:100%;padding:0 24px;display:flex;align-items:center;gap:28px}
+  .brand{font-weight:700;letter-spacing:.28em;font-size:14px;white-space:nowrap}
+  .brand span{color:var(--muted)}
+  .menu{display:flex;align-items:center;gap:4px;list-style:none;height:100%;flex:1}
+  .menu>li{height:100%;display:flex;align-items:center;position:relative}
+  .menu>li>a,.menu>li>button{background:none;border:0;color:var(--text);font:inherit;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;padding:0 14px;height:100%;cursor:pointer;display:flex;align-items:center;gap:6px}
+  .menu>li>a:hover,.menu>li>button:hover,.menu>li.open>button{color:var(--muted)}
+  .caret{width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s}
+  .menu>li.open .caret{transform:rotate(225deg) translateY(-2px)}
+  .spacer{flex:1}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .pill{border:1px solid var(--text);padding:8px 16px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;transition:.2s}
+  .pill:hover{background:var(--text);color:var(--bg)}
+  .icon-link{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:8px 6px}
+  .icon-link:hover{color:var(--text)}
+
+  /* dropdown panels */
+  .drop{position:absolute;top:var(--nav-h);left:0;background:var(--panel);border:1px solid var(--line);border-top:0;min-width:260px;padding:18px 20px;display:none}
+  .menu>li.open>.drop{display:block}
+  .drop.wide{display:none;grid-template-columns:repeat(3,minmax(220px,1fr));gap:28px;min-width:780px;left:-120px}
+  .menu>li.open>.drop.wide{display:grid}
+  .drop.cols2{display:none;grid-template-columns:repeat(2,minmax(220px,1fr));gap:28px;min-width:520px;left:-60px}
+  .menu>li.open>.drop.cols2{display:grid}
+  .drop h4{font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:10px;font-weight:600}
+  .drop a{display:block;padding:6px 0;font-size:14px}
+  .drop a small{display:block;color:var(--muted);font-size:12px;line-height:1.35}
+  .drop a:hover{color:var(--muted)}
+
+  .burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);color:var(--text);padding:8px 12px;font-size:12px;letter-spacing:.14em;cursor:pointer}
+
+  /* ---------- HERO ---------- */
+  .hero{min-height:100vh;padding:calc(var(--nav-h) + 64px) 24px 64px;display:flex;align-items:center;position:relative;overflow:hidden}
+  .hero-inner{max-width:1320px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+  .eyebrow{font-size:12px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;margin-bottom:18px}
+  h1{font-size:clamp(40px,7vw,96px);line-height:1;letter-spacing:.02em;font-weight:700;text-transform:uppercase}
+  h1 span{color:var(--muted)}
+  .lede{margin-top:26px;max-width:560px;color:var(--muted);font-size:17px}
+  .cta{margin-top:34px;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{padding:14px 26px;border:1px solid var(--text);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;transition:.2s}
+  .btn.solid{background:var(--text);color:var(--bg)}
+  .btn:hover{opacity:.8}
+  .hero-media{border:1px solid var(--line);background:var(--panel);aspect-ratio:1/1;overflow:hidden}
+  .hero-media img{width:100%;height:100%;object-fit:cover}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:96px 24px;border-top:1px solid var(--line)}
+  .wrap{max-width:1320px;margin:0 auto}
+  h2{font-size:clamp(26px,3.4vw,44px);letter-spacing:.04em;text-transform:uppercase;font-weight:700;margin-bottom:14px}
+  .sub{color:var(--muted);max-width:720px;margin-bottom:44px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+  .card{background:var(--bg);padding:26px 24px;min-height:150px;display:flex;flex-direction:column;justify-content:space-between;transition:background .2s}
+  .card:hover{background:var(--panel)}
+  .card h3{font-size:16px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+  .card p{font-size:14px;color:var(--muted)}
+  .card .go{margin-top:18px;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+  .tag{display:inline-block;font-size:10.5px;letter-spacing:.16em;border:1px solid var(--line);padding:2px 8px;color:var(--muted);margin-bottom:12px;text-transform:uppercase}
+
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .about img{border:1px solid var(--line)}
+  .about p{color:var(--muted);margin-bottom:16px}
+  .about p strong{color:var(--text)}
+
+  .contact{text-align:center}
+  .contact .big{font-size:clamp(22px,3vw,36px);margin:10px 0 26px}
+  .contact .cta{justify-content:center}
+
+  footer{border-top:1px solid var(--line);padding:44px 24px;color:var(--muted);font-size:13px}
+  .foot{max-width:1320px;margin:0 auto;display:flex;flex-wrap:wrap;gap:20px 40px;justify-content:space-between;align-items:flex-start}
+  .foot-links{display:flex;gap:10px 22px;flex-wrap:wrap}
+  .foot-links a:hover{color:var(--text)}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:1100px){
+    .burger{display:block}
+    .nav-right{display:none}
+    .menu{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:var(--bg);flex-direction:column;align-items:stretch;gap:0;padding:8px 24px 40px;overflow:auto;display:none;height:auto}
+    .menu.show{display:flex}
+    .menu>li{height:auto;flex-direction:column;align-items:stretch;border-bottom:1px solid var(--line)}
+    .menu>li>a,.menu>li>button{height:56px;padding:0;justify-content:space-between;font-size:14px}
+    .drop,.drop.wide,.drop.cols2{position:static;min-width:0;border:0;padding:0 0 14px;background:none;left:0}
+    .menu>li.open>.drop.wide,.menu>li.open>.drop.cols2{display:block}
+    .drop.wide>div,.drop.cols2>div{margin-bottom:18px}
+    .mobile-extra{display:flex !important}
+    .hero-inner,.about{grid-template-columns:1fr}
+    .hero-media{aspect-ratio:16/10}
+  }
+  .mobile-extra{display:none}
+</style>
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">ACUTE <span>+</span> LINE</a>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu">MENU</button>
+
+    <ul class="menu" id="menu">
+      <li><a href="https://acuteline.webflow.io/about/acuteline">People</a></li>
+
+      <li class="has-drop">
+        <button type="button" aria-haspopup="true">Powers <i class="caret"></i></button>
+        <div class="drop wide">
+          <div>
+            <h4>Studio Information</h4>
+            <a href="https://acuteline.webflow.io/portfolio/portfolio">Portfolio<small>explore our samples by digital services</small></a>
+            <a href="https://acuteline.webflow.io/whitestorm">White Storm<small>our special in-house creative development</small></a>
+            <a href="https://acuteline.webflow.io/special-pages/acute-line-launch-pad">External Projects<small>the launchpad of all our systems</small></a>
+            <a href="https://acuteline.webflow.io/special-pages/acute-line-infrastructure">Infrastructure<small>the comprehensive framework design</small></a>
+            <a href="https://acuteline.webflow.io/home/acute-line-agency-home-page">Agency<small>Acute Line agency website</small></a>
+            <a href="https://acuteline.webflow.io/">Video Library<small>video based visual stories</small></a>
+          </div>
+          <div>
+            <h4>Acute Line Specific</h4>
+            <a href="https://acuteline.webflow.io/special-pages/acute-line-pricing">Pricing<small>all our products and services costs</small></a>
+            <a href="https://acuteline.typeform.com/to/hm388X9o">Survey<small>identify your design perspectives</small></a>
+            <a href="https://form.jotform.com/211928320167049">Upload a File<small>include your data in design projects</small></a>
+            <a href="https://acuteline.webflow.io/blog-layouts/blog-1">Blog<small>articles on design and business</small></a>
+            <a href="https://acuteline.webflow.io/special-pages/acute-line-electronic-music">Music<small>our music tracks for you</small></a>
+            <a href="https://acuteline.webflow.io/special-pages/acute-line-scopes-spectrum">Acute Line Holistic<small>big picture overview</small></a>
+          </div>
+          <div>
+            <h4>Featured Resources</h4>
+            <a href="https://form.jotform.com/212171746177861">Free E-Book<small>sustainability and the global design expedition</small></a>
+            <a href="https://form.jotform.com/213092344647860">Freebies<small>experimental set of samples</small></a>
+            <h4 style="margin-top:20px">Featured Campaign</h4>
+            <a href="https://www.kickstarter.com/projects/whitestorm/interactive-3d-film-white-storm">Kickstarter · White Storm<small>interactive 3D film framework</small></a>
+          </div>
+        </div>
+      </li>
+
+      <li class="has-drop">
+        <button type="button" aria-haspopup="true">Designs <i class="caret"></i></button>
+        <div class="drop cols2">
+          <div>
+            <h4>Services</h4>
+            <a href="https://acuteline.webflow.io/services/3d-modeling">3D Design</a>
+            <a href="https://acuteline.webflow.io/services/design-product-mockup">Design Product Mockup</a>
+            <a href="https://acuteline.webflow.io/services/visualeffectswork">Digital Humans</a>
+            <a href="https://acuteline.webflow.io/services/cinematography">Video Production &amp; Animation</a>
+            <a href="https://acuteline.webflow.io/services/ai-generative-digital">AI-Generative Digital Content</a>
+            <a href="https://acuteline.webflow.io/services/brandidentitydesign">Brand Identity Design</a>
+            <a href="https://acuteline.webflow.io/services/concept-art-works">Concept &amp; Digital Art</a>
+            <a href="https://acuteline.webflow.io/services/acutelinewebdesign">Webflow Design</a>
+          </div>
+          <div>
+            <h4>More</h4>
+            <a href="https://acuteline.webflow.io/services/deck-designer">Deck Designer</a>
+            <a href="https://acuteline.webflow.io/services/market-research">Online Market Research</a>
+            <a href="https://acuteline.webflow.io/services/3d-configurator">3D Configurator <small>in development</small></a>
+            <a href="https://acuteline.webflow.io/services/data-visualisation">Data Visualisation <small>in development</small></a>
+            <a href="https://acuteline.webflow.io/services/virtual-production">Virtual Production <small>in development</small></a>
+            <a href="https://acuteline.webflow.io/services/performance-capture">Performance Capture <small>in development</small></a>
+            <a href="https://acuteline.webflow.io/services/notion-workspace-administration">Notion Workspace Admin <small>in development</small></a>
+          </div>
+        </div>
+      </li>
+
+      <li class="has-drop">
+        <button type="button" aria-haspopup="true">Product <i class="caret"></i></button>
+        <div class="drop cols2">
+          <div>
+            <h4>Acute Line</h4>
+            <a href="https://acuteline.webflow.io/acute-line-book">Acute Line Book<small>global citizen, step by step economics</small></a>
+            <a href="https://acuteline.webflow.io/product-pages-acute-line/acute-line-nft-product">NFT Collection<small>human dignity collection on OpenSea</small></a>
+            <a href="https://acuteline.webflow.io/product-pages-acute-line/acute-line-webflow-templates-product">Webflow Templates<small>framework for building websites</small></a>
+            <a href="https://acuteline.webflow.io/product-pages-acute-line/sandy-360-product">Sandy 360<small>digital character 3D model on Sketchfab</small></a>
+          </div>
+          <div>
+            <h4>Digital Product Lines</h4>
+            <a href="https://acuteline.webflow.io/product-pages-acute-line/design-university-product">Design University<small>learning design paths</small></a>
+            <a href="https://acuteline.webflow.io/product-pages-acute-line/design-posters-product">Design Posters<small>best Acute Line graphics</small></a>
+            <a href="https://acuteline.webflow.io/product-pages-acute-line/acute-line-design-system-product">Visual Communication Set<small>visual language kits</small></a>
+            <a href="https://acuteline.webflow.io/product-pages-acute-line/acute-line-aaa-rig-product">AAA Face Rig<small>FACS based Maya face rig</small></a>
+          </div>
+        </div>
+      </li>
+
+      <li><a href="https://acuteline.webflow.io/special-pages/acute-line-pricing">Plans</a></li>
+      <li><a href="https://acuteline.typeform.com/to/e56lzPQ4">Climate</a></li>
+
+      <li class="has-drop">
+        <button type="button" aria-haspopup="true">Contact <i class="caret"></i></button>
+        <div class="drop">
+          <a href="https://acuteline.webflow.io/contacts/contacts">Contact Form</a>
+          <a href="https://calendly.com/oleg-efimov/45min">Book a Consultation</a>
+          <a href="https://www.upwork.com/freelancers/~01edbd8d10d9fda7a4?mp_source=share">Upwork</a>
+          <a href="mailto:design@acuteline.com">design@acuteline.com</a>
+        </div>
+      </li>
+
+      <!-- shown only inside the mobile menu -->
+      <li class="mobile-extra" style="flex-direction:column">
+        <a href="https://www.youtube.com/channel/UCG2s_4jh9CP8Kr-vaApZfBA" style="padding:16px 0;font-size:14px;letter-spacing:.16em;text-transform:uppercase">YouTube</a>
+        <a href="https://acutelinewriting.wordpress.com/wp-content/uploads/2026/07/olege_portfolio_upwork_web.pdf" style="padding:16px 0;font-size:14px;letter-spacing:.16em;text-transform:uppercase">Portfolio PDF</a>
+      </li>
+    </ul>
+
+    <div class="nav-right">
+      <a class="icon-link" href="https://www.youtube.com/channel/UCG2s_4jh9CP8Kr-vaApZfBA">YouTube</a>
+      <a class="icon-link" href="https://acutelinewriting.wordpress.com/wp-content/uploads/2026/07/olege_portfolio_upwork_web.pdf">Portfolio PDF</a>
+      <a class="pill" href="https://calendly.com/oleg-efimov/45min">Book a call</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <p class="eyebrow">Acute Line Digital Design Studio</p>
+        <h1>Acute <span>+</span> Line<br>Specialised<br>Skill Set</h1>
+        <p class="lede">Expertise-driven computer graphics research and practice. Digital humans, hard surface 3D, facial animation systems and cinematic visualisation.</p>
+        <div class="cta">
+          <a class="btn solid" href="https://acuteline.webflow.io/portfolio/portfolio">View Portfolio</a>
+          <a class="btn" href="https://acuteline.webflow.io/whitestorm">Short Film White Storm</a>
+          <a class="btn" href="https://www.youtube.com/channel/UCG2s_4jh9CP8Kr-vaApZfBA">YouTube</a>
+        </div>
+      </div>
+      <div class="hero-media">
+        <img src="https://cdn.prod.website-files.com/65803a6840908b4dbc74bb16/69ada7ad61a3afa1a10aae97_Oleg%20Efimov%202.gif" alt="Acute Line showreel preview" loading="eager">
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= ABOUT ================= -->
+  <section id="about">
+    <div class="wrap about">
+      <img src="https://cdn.prod.website-files.com/65803a6840908b4dbc74bb16/69ada77e04959af663825575_Research%20Focused%202.gif" alt="Research focused digital humans" loading="lazy">
+      <div>
+        <p class="eyebrow">Expertise</p>
+        <h2>Research-driven computer graphics</h2>
+        <p>Hello. My name is <strong>Oleg</strong>, from New Zealand. Senior research artist working across digital humans, the human vision system and computer graphics.</p>
+        <p>Facial animation and FACS-based rigging, anatomical 3D modelling, shader development, performance capture, photogrammetry, hard surface and sci-fi concept design, and real-time engine pipelines.</p>
+        <div class="cta">
+          <a class="btn" href="https://acuteline.webflow.io/product-pages-acute-line/acute-line-aaa-rig-product">Explore the AAA Rig System</a>
+          <a class="btn" href="https://acuteline.webflow.io/about/acuteline">About the studio</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SERVICES ================= -->
+  <section id="services">
+    <div class="wrap">
+      <h2>Services</h2>
+      <p class="sub">Visually driven work for brands, studios and research projects.</p>
+      <div class="grid">
+        <a class="card" href="https://acuteline.webflow.io/services/visualeffectswork"><div><span class="tag">Digital Humans</span><h3>Digital Humans</h3><p>Facial animation and character 3D modelling.</p></div><span class="go">Explore →</span></a>
+        <a class="card" href="https://acuteline.webflow.io/services/3d-modeling"><div><span class="tag">3D Design</span><h3>3D Design</h3><p>Product design in 3D and motion.</p></div><span class="go">Explore →</span></a>
+        <a class="card" href="https://acuteline.webflow.io/services/cinematography"><div><span class="tag">Cinema</span><h3>Video &amp; Animation</h3><p>Visually driven stories that move brands.</p></div><span class="go">Explore →</span></a>
+        <a class="card" href="https://acuteline.webflow.io/services/design-product-mockup"><div><span class="tag">3D Design</span><h3>Product Mockup</h3><p>Design product mockups.</p></div><span class="go">Explore →</span></a>
+        <a class="card" href="https://acuteline.webflow.io/services/brandidentitydesign"><div><span class="tag">Marketing</span><h3>Brand Identity</h3><p>Make your mark with a custom logo design.</p></div><span class="go">Explore →</span></a>
+        <a class="card" href="https://acuteline.webflow.io/services/ai-generative-digital"><div><span class="tag">AI</span><h3>AI-Generative Content</h3><p>From music to image and to 3D.</p></div><span class="go">Explore →</span></a>
+        <a class="card" href="https://acuteline.webflow.io/services/acutelinewebdesign"><div><span class="tag">Web</span><h3>Webflow Design</h3><p>Where great ideas meet the world.</p></div><span class="go">Explore →</span></a>
+        <a class="card" href="https://acuteline.webflow.io/services/concept-art-works"><div><span class="tag">Art</span><h3>Concept &amp; Digital Art</h3><p>Graphic art illustrations and drawings.</p></div><span class="go">Explore →</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRODUCTS ================= -->
+  <section id="products">
+    <div class="wrap">
+      <h2>Products</h2>
+      <p class="sub">Digital products and learning material from the studio.</p>
+      <div class="grid">
+        <a class="card" href="https://acuteline.webflow.io/product-pages-acute-line/design-university-product"><div><span class="tag">Course</span><h3>Design University</h3><p>Digital design course in stages of professional upgrades.</p></div><span class="go">View →</span></a>
+        <a class="card" href="https://acuteline.webflow.io/product-pages-acute-line/acute-line-aaa-rig-product"><div><span class="tag">System</span><h3>AAA Face Rig</h3><p>FACS based Autodesk Maya face rig.</p></div><span class="go">View →</span></a>
+        <a class="card" href="https://acuteline.webflow.io/acute-line-book"><div><span class="tag">Book</span><h3>Acute Line Book</h3><p>Step by step instructions for the global citizen.</p></div><span class="go">View →</span></a>
+        <a class="card" href="https://acuteline.webflow.io/product-pages-acute-line/sandy-360-product"><div><span class="tag">3D Model</span><h3>Sandy 360</h3><p>Digital character 3D model on Sketchfab.</p></div><span class="go">View →</span></a>
+        <a class="card" href="https://acuteline.webflow.io/product-pages-acute-line/design-posters-product"><div><span class="tag">Prints</span><h3>Design Posters</h3><p>Best Acute Line graphics in digital.</p></div><span class="go">View →</span></a>
+        <a class="card" href="https://acuteline.webflow.io/product-pages-acute-line/acute-line-design-system-product"><div><span class="tag">Kit</span><h3>Visual Communication Set</h3><p>Visual language kits.</p></div><span class="go">View →</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WHITE STORM ================= -->
+  <section id="whitestorm">
+    <div class="wrap">
+      <p class="eyebrow">Special project</p>
+      <h2>White Storm</h2>
+      <p class="sub">An interactive, narrative-driven framework for design research: technological exploration of facial performance for cinematic narrative.</p>
+      <div class="cta" style="margin-top:0">
+        <a class="btn solid" href="https://acuteline.webflow.io/whitestorm">Short Film Page</a>
+        <a class="btn" href="https://www.kickstarter.com/projects/whitestorm/interactive-3d-film-white-storm">Kickstarter Campaign</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <p class="eyebrow">Let us know if you want to work together</p>
+      <p class="big">We work directly or via Upwork.</p>
+      <div class="cta">
+        <a class="btn solid" href="mailto:design@acuteline.com">design@acuteline.com</a>
+        <a class="btn" href="https://calendly.com/oleg-efimov/45min">Book a consultation</a>
+        <a class="btn" href="https://www.upwork.com/freelancers/~01edbd8d10d9fda7a4?mp_source=share">Upwork</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="foot">
+    <div>
+      <div class="brand" style="margin-bottom:10px">ACUTE <span>+</span> LINE</div>
+      <div>Digital Design Studio / Agency · Christchurch, New Zealand</div>
+      <div style="margin-top:6px">© 2025–2030 Acute Line. Oleg E. All rights reserved.</div>
+    </div>
+    <div class="foot-links">
+      <a href="https://www.youtube.com/channel/UCG2s_4jh9CP8Kr-vaApZfBA">YouTube</a>
+      <a href="https://www.instagram.com/acutelinedesign/">Instagram</a>
+      <a href="https://www.behance.net/acutelinestudio">Behance</a>
+      <a href="https://www.artstation.com/olegefimov/profile">ArtStation</a>
+      <a href="https://www.facebook.com/motiondesignexplainervideos">Facebook</a>
+      <a href="https://twitter.com/acute_line">Twitter</a>
+    </div>
+    <div class="foot-links">
+      <a href="https://acuteline.notion.site/Privacy-Policy-57f85846ca684b31a589f5106362ba54">Privacy Policy</a>
+      <a href="https://acuteline.notion.site/Terms-of-Service-9cff8996caf54d43ba6608d48aa34d3c">Terms of Service</a>
+      <a href="https://acuteline.notion.site/Contact-Support-0dd4c0f4ebe6402cbf8d4bc2e364183c">Contact &amp; Support</a>
+      <a href="https://acuteline.notion.site/Investor-Center-0a261bd4e47747449f342b3a8ab78b7c">Investor Centre</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var menu = document.getElementById('menu');
+    var burger = document.getElementById('burger');
+    var items = menu.querySelectorAll('li.has-drop');
+
+    function closeAll(except){
+      items.forEach(function(li){ if(li!==except){ li.classList.remove('open'); } });
+    }
+    items.forEach(function(li){
+      var btn = li.querySelector('button');
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var willOpen = !li.classList.contains('open');
+        closeAll(li);
+        li.classList.toggle('open', willOpen);
+      });
+    });
+    document.addEventListener('click', function(e){
+      if(!menu.contains(e.target)) closeAll();
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){ closeAll(); menu.classList.remove('show'); burger.setAttribute('aria-expanded','false'); }
+    });
+    burger.addEventListener('click', function(){
+      var show = menu.classList.toggle('show');
+      burger.setAttribute('aria-expanded', show ? 'true' : 'false');
+      burger.textContent = show ? 'CLOSE' : 'MENU';
+    });
+  })();
+</script>
+</body>
+</html>
